@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ibm.developer</groupId>
-	<artifactId>tekton-hello-world</artifactId>
+	<artifactId>hello-tekton</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<url>https://openwhisk.apache.org/</url>
 	<properties>
@@ -19,7 +19,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>tekton-hello-world</finalName>
+		<finalName>hello-tekton</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

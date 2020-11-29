@@ -9,7 +9,7 @@ spec:
       default: .
     - name: path-to-manifest-file
       description: The path to the yaml file to deploy within the git source
-      default: deployment.yaml
+      default: manifest.yaml
     - name: ibm-cloud-region
       description: Region where cluster is located
     - name: api-url

@@ -6,6 +6,6 @@ packages:
     license: Apache-2.0
     actions:
       helloJava:
-        function: target/tekton-hello-world.jar
+        function: target/hello-tekton.jar
         runtime: java
         main: com.ibm.developer.FunctionApp

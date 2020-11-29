@@ -9,16 +9,13 @@ spec:
     default: .
   - name: path-to-manifest-file
     description: The path to the yaml file describe how to deploy the application. 
-    default: deployment.yaml
+    default: manifest.yaml
   - name: api-url
     description: The api url for interacting with ibm cloud
     default: cloud.ibm.com
-  - name: cluster-region
+  - name: ibm-cloud-region
     description: The region where the cluster resides
     default: us-south
-  - name: cluster-namespace
-    description: The namespace being used within the k8s cluster
-    default: default
   - name: git-repo-url
     description: URL to the git repo to be cloned
   - name: apikey
@@ -31,7 +28,7 @@ spec:
   - apiVersion: tekton.dev/v1beta1
     kind: PipelineRun
     metadata:
-      generateName: $(params.deployment-image)-build-
+      generateName: hello-tekton-build-
     spec:
       serviceAccountName: service-account
       pipelineRef:
@@ -43,12 +40,10 @@ spec:
         value: $(params.path-to-manifest-file)
       - name: api-url
         value: $(params.api-url)
-      - name: cluster-region
-        value: $(params.cluster-region)
+      - name: ibm-cloud-region
+        value: $(params.ibm-cloud-region)
       - name: git-repo-url
         value: $(params.git-repo-url)
-      - name: commit-id
-        value: $(params.commit-id)
       - name: mvn-goals
         type: array
         value: $(params.mvn-goals)
@@ -61,8 +56,6 @@ spec:
     type: kubernetes.io/basic-auth
     metadata:
       name: ibm-cr-secret
-      annotations:
-        tekton.dev/docker-0: $(params.container-repo-url)
     stringData:
       username: iamapikey
       password: $(params.apikey)
@@ -87,7 +80,7 @@ spec:
     - name: path-to-context
     - name: path-to-manifest-file
     - name: api-url
-    - name: cluster-region
+    - name: ibm-cloud-region
     - name: mvn-goals
       type: array
     - name: git-repo-url
@@ -118,20 +111,20 @@ spec:
     workspaces:
       - name: source
         workspace: git-repo
-  - name: deploy-image-to-ibm-cloud
+  - name: deploy-image-to-ibm-cloud-functions
     taskRef:
-      name: deploy-image-to-ibm-cloud
+      name: deploy-image-to-ibm-cloud-functions
     runAfter:
       - build-artifact-from-source
     params:
+    - name: path-to-context
+      value: $(params.path-to-context)
     - name: path-to-manifest-file
       value: $(params.path-to-manifest-file)
-    - name: cluster-region
-      value: $(params.cluster-region)
+    - name: ibm-cloud-region
+      value: $(params.ibm-cloud-region)
     - name: api-url
       value: $(params.api-url)
-    - name: cluster-namespace
-      value: $(params.cluster-namespace)
     workspaces:
       - name: source
         workspace: git-repo

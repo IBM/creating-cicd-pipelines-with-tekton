@@ -8,5 +8,3 @@ spec:
   - name: manual-event-trigger
     template:
       name: project-trigger-template
-    bindings:
-    - name: manual-trigger-binding

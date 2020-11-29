@@ -4,9 +4,6 @@ metadata:
   name: deploy-image-to-ibm-cloud-functions
 spec:
   params:
-    - name: path-to-context
-      description: The path to the build context, used by Kaniko - within the workspace
-      default: .
     - name: path-to-manifest-file
       description: The path to the yaml file to deploy within the git source
       default: manifest.yaml

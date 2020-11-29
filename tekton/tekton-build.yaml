@@ -6,8 +6,6 @@ spec:
   params:
   - name: git-repo-url
     description: URL to the git repo to be cloned
-  - name: apikey
-    description: Service Account API KEY for interacting with IBM Cloud note the specific syntax of apikey has special relevance to many IBM Cloud resources, so should not be changed.
   - name: path-to-context
     description: The path to the build context, used by Kaniko
     default: .
@@ -20,15 +18,11 @@ spec:
   - name: ibm-cloud-region
     description: The region where the cluster resides
     default: us-south
-  - name: mvn-goals
-    description: The Maven goals to be executed
-    type: array
-    default: ["package"]
   resourcetemplates:
   - apiVersion: tekton.dev/v1beta1
     kind: PipelineRun
     metadata:
-      generateName: hello-tekton-build-
+      generateName: build-
     spec:
       serviceAccountName: service-account
       pipelineRef:
@@ -36,8 +30,6 @@ spec:
       params:
       - name: path-to-context
         value: $(params.path-to-context)
-      - name: apikey
-        value: $(params.apikey)
       - name: path-to-manifest-file
         value: $(params.path-to-manifest-file)
       - name: api-url
@@ -46,9 +38,6 @@ spec:
         value: $(params.ibm-cloud-region)
       - name: git-repo-url
         value: $(params.git-repo-url)
-      - name: mvn-goals
-        type: array
-        value: $(params.mvn-goals)
       workspaces:
         - name: git-repo
           persistentVolumeClaim:
@@ -72,7 +61,6 @@ metadata:
 spec:
   params:
     - name: api-url
-    - name: apikey
     - name: git-repo-url
     - name: path-to-context
     - name: path-to-manifest-file

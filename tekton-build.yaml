@@ -1,0 +1,142 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: project-trigger-template
+spec:
+  params:
+  - name: path-to-context
+    description: The path to the build context, used by Kaniko
+    default: .
+  - name: path-to-deployment-file
+    description: The path to the yaml file describe how to deploy the application. 
+    default: deployment.yaml
+  - name: api-url
+    description: The api url for interacting with ibm cloud
+    default: cloud.ibm.com
+  - name: cluster-region
+    description: The region where the cluster resides
+    default: us-south
+  - name: cluster-namespace
+    description: The namespace being used within the k8s cluster
+    default: default
+  - name: deployment-image-placeholder
+    description: Placeholder value within deployment yaml to be replaced
+    default: IMAGE
+  - name: git-repo-url
+    description: URL to the git repo to be cloned
+  - name: apikey
+    description: Service Account API KEY for interacting with IBM Cloud note the specific syntax of apikey has special relevance to many IBM Cloud resources, so should not be changed.
+  - name: mvn-goals
+    description: The Maven goals to be executed
+    type: array
+    default: ["package"]
+  resourcetemplates:
+  - apiVersion: tekton.dev/v1beta1
+    kind: PipelineRun
+    metadata:
+      generateName: $(params.deployment-image)-build-
+    spec:
+      serviceAccountName: service-account
+      pipelineRef:
+        name: project-pipeline
+      params:
+      - name: path-to-context
+        value: $(params.path-to-context)
+      - name: path-to-deployment-file
+        value: $(params.path-to-deployment-file)
+      - name: api-url
+        value: $(params.api-url)
+      - name: cluster-region
+        value: $(params.cluster-region)
+      - name: git-repo-url
+        value: $(params.git-repo-url)
+      - name: commit-id
+        value: $(params.commit-id)
+      - name: mvn-goals
+        type: array
+        value: $(params.mvn-goals)
+      workspaces:
+        - name: git-repo
+          persistentVolumeClaim:
+            claimName: $(uid)-pvc
+  - apiVersion: v1
+    kind: Secret
+    type: kubernetes.io/basic-auth
+    metadata:
+      name: ibm-cr-secret
+      annotations:
+        tekton.dev/docker-0: $(params.container-repo-url)
+    stringData:
+      username: iamapikey
+      password: $(params.apikey)
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: $(uid)-pvc
+    spec:
+      resources:
+        requests:
+          storage: 5Gi
+      volumeMode: Filesystem
+      accessModes:
+        - ReadWriteOnce
+---
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: project-pipeline
+spec:
+  params:
+    - name: path-to-context
+    - name: path-to-deployment-file
+    - name: api-url
+    - name: cluster-region
+    - name: mvn-goals
+      type: array
+    - name: git-repo-url
+  workspaces:
+    - name: git-repo 
+      description: Workspace for holding the cloned source code from the git-repo
+  tasks:
+  - name: git-clone
+    taskRef:
+      name: git-clone-repo
+    params:
+      - name: repository
+        value: $(params.git-repo-url)
+    workspaces:
+      - name: output
+        workspace: git-repo
+  - name: build-artifact-from-source
+    taskRef:
+      name: maven-build-java-artifact-from-source
+    runAfter:
+      - git-clone
+    params:
+      - name: mvn-goals
+        type: array
+        value: $(params.mvn-goals)
+      - name: path-to-context
+        value: $(params.path-to-context)
+    workspaces:
+      - name: source
+        workspace: git-repo
+  - name: deploy-image-to-ibm-cloud
+    taskRef:
+      name: deploy-image-to-ibm-cloud
+    runAfter:
+      - update-image-ref-in-deployment
+    params:
+    - name: path-to-deployment-file
+      value: $(params.path-to-deployment-file)
+    - name: name-of-cluster
+      value: $(params.path-to-context)
+    - name: cluster-region
+      value: $(params.cluster-region)
+    - name: api-url
+      value: $(params.api-url)
+    - name: cluster-namespace
+      value: $(params.cluster-namespace)
+    workspaces:
+      - name: source
+        workspace: git-repo

@@ -36,6 +36,8 @@ spec:
       params:
       - name: path-to-context
         value: $(params.path-to-context)
+      - name: apikey
+        value: $(params.apikey)
       - name: path-to-manifest-file
         value: $(params.path-to-manifest-file)
       - name: api-url
@@ -49,6 +51,19 @@ spec:
         value: $(params.mvn-goals)
       workspaces:
         - name: git-repo
+          persistentVolumeClaim:
+            claimName: $(uid)-pvc
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: $(uid)-pvc
+    spec:
+      resources:
+        requests:
+          storage: 5Gi
+      volumeMode: Filesystem
+      accessModes:
+        - ReadWriteOnce
 ---
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
@@ -57,6 +72,7 @@ metadata:
 spec:
   params:
     - name: api-url
+    - name: apikey
     - name: git-repo-url
     - name: path-to-context
     - name: path-to-manifest-file

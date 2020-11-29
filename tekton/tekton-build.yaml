@@ -49,27 +49,6 @@ spec:
         value: $(params.mvn-goals)
       workspaces:
         - name: git-repo
-          persistentVolumeClaim:
-            claimName: $(uid)-pvc
-  - apiVersion: v1
-    kind: Secret
-    type: kubernetes.io/basic-auth
-    metadata:
-      name: ibm-cr-secret
-    stringData:
-      username: iamapikey
-      password: $(params.apikey)
-  - apiVersion: v1
-    kind: PersistentVolumeClaim
-    metadata:
-      name: $(uid)-pvc
-    spec:
-      resources:
-        requests:
-          storage: 5Gi
-      volumeMode: Filesystem
-      accessModes:
-        - ReadWriteOnce
 ---
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
@@ -77,13 +56,13 @@ metadata:
   name: project-pipeline
 spec:
   params:
+    - name: api-url
+    - name: git-repo-url
     - name: path-to-context
     - name: path-to-manifest-file
-    - name: api-url
     - name: ibm-cloud-region
     - name: mvn-goals
       type: array
-    - name: git-repo-url
   workspaces:
     - name: git-repo 
       description: Workspace for holding the cloned source code from the git-repo
@@ -117,8 +96,6 @@ spec:
     runAfter:
       - build-artifact-from-source
     params:
-    - name: path-to-context
-      value: $(params.path-to-context)
     - name: path-to-manifest-file
       value: $(params.path-to-manifest-file)
     - name: ibm-cloud-region

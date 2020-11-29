@@ -1,12 +1,12 @@
 apiVersion: triggers.tekton.dev/v1beta1
 kind: EventListener
 metadata:
-  name: github-push-event-listener
+  name: manual-event-listener
 spec:
   serviceAccountName: service-account
   triggers:
-  - name: git-push-event-trigger
+  - name: manual-event-trigger
     template:
       name: project-trigger-template
     bindings:
-    - name: github-push-trigger-binding
+    - name: manual-trigger-binding

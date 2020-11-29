@@ -1,10 +1,8 @@
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: TriggerBinding
 metadata:
-  name: github-push-trigger-binding
+  name: manual-trigger-binding
 spec:
   params:
   - name: git-repo-url
-    value: $(event.repository.git_url)
-  - name: commit-id
-    value: $(event.checkout_sha)
+    value: $(event.git-repo-url)

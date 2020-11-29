@@ -1,0 +1,39 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: deploy-image-to-ibm-cloud
+spec:
+  params:
+    - name: path-to-context
+      description: The path to the build context, used by Kaniko - within the workspace
+      default: .
+    - name: path-to-deployment-file
+      description: The path to the yaml file to deploy within the git source
+      default: deployment.yaml
+    - name: name-of-cluster
+      description: Name of cluster to deploy image to
+    - name: cluster-region
+      description: Region where cluster is located
+    - name: api-url
+      description: API URL for interacting with IBM Cloud
+      default: cloud.ibm.com
+    - name: cluster-namespace
+      description: The namespace being used within the k8s cluster
+      default: default
+  workspaces:
+    - name: source
+  steps:
+    - name: deploy-app
+      image: ibmcom/pipeline-base-image:2.7
+      env:
+        - name: IBMCLOUD_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: secure-properties
+              key: apikey
+      command: ["/bin/bash", "-c"]
+      args:
+        - set -e -o pipefail;
+          ibmcloud login -a $(params.api-url) -r $(params.cluster-region);
+          export IKS_BETA_VERSION=1;
+          ibmcloud fn deploy -m "manifest.yml"

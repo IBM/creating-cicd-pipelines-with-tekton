@@ -7,7 +7,7 @@ spec:
   - name: path-to-context
     description: The path to the build context, used by Kaniko
     default: .
-  - name: path-to-deployment-file
+  - name: path-to-manifest-file
     description: The path to the yaml file describe how to deploy the application. 
     default: deployment.yaml
   - name: api-url
@@ -19,9 +19,6 @@ spec:
   - name: cluster-namespace
     description: The namespace being used within the k8s cluster
     default: default
-  - name: deployment-image-placeholder
-    description: Placeholder value within deployment yaml to be replaced
-    default: IMAGE
   - name: git-repo-url
     description: URL to the git repo to be cloned
   - name: apikey
@@ -42,8 +39,8 @@ spec:
       params:
       - name: path-to-context
         value: $(params.path-to-context)
-      - name: path-to-deployment-file
-        value: $(params.path-to-deployment-file)
+      - name: path-to-manifest-file
+        value: $(params.path-to-manifest-file)
       - name: api-url
         value: $(params.api-url)
       - name: cluster-region
@@ -88,7 +85,7 @@ metadata:
 spec:
   params:
     - name: path-to-context
-    - name: path-to-deployment-file
+    - name: path-to-manifest-file
     - name: api-url
     - name: cluster-region
     - name: mvn-goals
@@ -127,10 +124,8 @@ spec:
     runAfter:
       - build-artifact-from-source
     params:
-    - name: path-to-deployment-file
-      value: $(params.path-to-deployment-file)
-    - name: name-of-cluster
-      value: $(params.path-to-context)
+    - name: path-to-manifest-file
+      value: $(params.path-to-manifest-file)
     - name: cluster-region
       value: $(params.cluster-region)
     - name: api-url

@@ -1,0 +1,11 @@
+# wskdeploy manifest file
+
+packages:
+  default:
+    version: 1.0
+    license: Apache-2.0
+    actions:
+      helloJava:
+        function: target/tekton-hello-world.jar
+        runtime: java
+        main: com.ibm.developer.FunctionApp

@@ -7,6 +7,6 @@ spec:
   triggers:
   - name: manual-event-trigger
     template:
-      name: project-trigger-template
+      name: ibm-cloud-trigger-template
     bindings:
     - name: manual-trigger-binding

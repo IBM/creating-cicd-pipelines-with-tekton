@@ -7,17 +7,13 @@ spec:
   - name: path-to-context
     description: The path to the build context, used by Kaniko
     default: .
-  - name: path-to-deployment-file
+  - name: path-to-manifest-file
     description: The path to the yaml file describe how to deploy the application. 
     default: manifest.yaml
   - name: api-url
     description: The api url for interacting with ibm cloud
     default: cloud.ibm.com
-  - name: container-repo-namespace
-    description: Namespace where image is located
-  - name: deployment-image
-    description: Name of image to be deployed
-  - name: cluster-region
+  - name: ibm-cloud-region
     description: The region where the cluster resides
     default: us-south
   - name: git-repo-url
@@ -36,14 +32,12 @@ spec:
       params:
       - name: path-to-context
         value: $(params.path-to-context)
-      - name: path-to-deployment-file
-        value: $(params.path-to-deployment-file)
+      - name: path-to-manifest-file
+        value: $(params.path-to-manifest-file)
       - name: api-url
         value: $(params.api-url)
-      - name: deployment-image
-        value: $(params.deployment-image)
-      - name: cluster-region
-        value: $(params.cluster-region)
+      - name: ibm-cloud-region
+        value: $(params.ibm-cloud-region)
       - name: git-repo-url
         value: $(params.git-repo-url)
       workspaces:

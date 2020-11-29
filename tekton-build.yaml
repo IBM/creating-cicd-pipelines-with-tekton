@@ -125,7 +125,7 @@ spec:
     taskRef:
       name: deploy-image-to-ibm-cloud
     runAfter:
-      - update-image-ref-in-deployment
+      - build-artifact-from-source
     params:
     - name: path-to-deployment-file
       value: $(params.path-to-deployment-file)

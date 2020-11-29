@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: deploy-image-to-ibm-cloud-functions
+  name: deploy-artifact-to-ibm-cloud-functions
 spec:
   params:
     - name: path-to-manifest-file
@@ -28,4 +28,4 @@ spec:
         - set -e -o pipefail;
           ibmcloud login -a $(params.api-url) -r $(params.ibm-cloud-region);
           export IKS_BETA_VERSION=1;
-          ibmcloud fn deploy -m "$(params.path-to-manifest-file);
+          ibmcloud fn deploy -m $(params.path-to-manifest-file);

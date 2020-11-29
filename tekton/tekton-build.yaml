@@ -90,9 +90,9 @@ spec:
     workspaces:
       - name: source
         workspace: git-repo
-  - name: deploy-image-to-ibm-cloud-functions
+  - name: deploy-artifact-to-ibm-cloud-functions
     taskRef:
-      name: deploy-image-to-ibm-cloud-functions
+      name: deploy-artifact-to-ibm-cloud-functions
     runAfter:
       - build-artifact-from-source
     params:

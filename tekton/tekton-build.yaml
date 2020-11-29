@@ -4,6 +4,10 @@ metadata:
   name: project-trigger-template
 spec:
   params:
+  - name: git-repo-url
+    description: URL to the git repo to be cloned
+  - name: apikey
+    description: Service Account API KEY for interacting with IBM Cloud note the specific syntax of apikey has special relevance to many IBM Cloud resources, so should not be changed.
   - name: path-to-context
     description: The path to the build context, used by Kaniko
     default: .
@@ -16,10 +20,6 @@ spec:
   - name: ibm-cloud-region
     description: The region where the cluster resides
     default: us-south
-  - name: git-repo-url
-    description: URL to the git repo to be cloned
-  - name: apikey
-    description: Service Account API KEY for interacting with IBM Cloud note the specific syntax of apikey has special relevance to many IBM Cloud resources, so should not be changed.
   - name: mvn-goals
     description: The Maven goals to be executed
     type: array

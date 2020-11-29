@@ -21,4 +21,4 @@ spec:
       workingDir: /workspace/source/$(params.path-to-context)
       command: ["/usr/bin/mvn"]
       args:
-        - ["package"]
+        - "package"

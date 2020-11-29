@@ -18,7 +18,6 @@ spec:
   - name: ibm-cloud-region
     description: The region where the cluster resides
     default: us-south
-  - name: git-access-token
   resourcetemplates:
   - apiVersion: tekton.dev/v1beta1
     kind: PipelineRun
@@ -39,8 +38,6 @@ spec:
         value: $(params.ibm-cloud-region)
       - name: git-repo-url
         value: $(params.git-repo-url)
-      - name: git-access-token
-        value: $(params.git-access-token)
       workspaces:
         - name: git-repo
           persistentVolumeClaim:
@@ -68,7 +65,6 @@ spec:
     - name: path-to-context
     - name: path-to-manifest-file
     - name: ibm-cloud-region
-    - name: git-access-token
   workspaces:
     - name: git-repo 
       description: Workspace for holding the cloned source code from the git-repo
@@ -78,7 +74,9 @@ spec:
       name: git-clone-repo
     params:
       - name: git-access-token
-        value: $(params.git-access-token)
+        value: public
+      - name: branch
+        value: main
       - name: repository
         value: $(params.git-repo-url)
     workspaces:

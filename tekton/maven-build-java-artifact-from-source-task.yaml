@@ -6,10 +6,6 @@ spec:
   workspaces:
   - name: source
   params:
-    - name: mvn-goals
-      type: array
-      description: Goals to be run during maven build step
-      default: ["package"]
     - name: path-to-context
       description: Path to maven POM.xml file
       default: .
@@ -25,4 +21,4 @@ spec:
       workingDir: /workspace/source/$(params.path-to-context)
       command: ["/usr/bin/mvn"]
       args:
-        - "$(params.mvn-goals)"
+        - ["package"]

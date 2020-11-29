@@ -65,8 +65,6 @@ spec:
     - name: path-to-context
     - name: path-to-manifest-file
     - name: ibm-cloud-region
-    - name: mvn-goals
-      type: array
   workspaces:
     - name: git-repo 
       description: Workspace for holding the cloned source code from the git-repo
@@ -86,9 +84,6 @@ spec:
     runAfter:
       - git-clone
     params:
-      - name: mvn-goals
-        type: array
-        value: $(params.mvn-goals)
       - name: path-to-context
         value: $(params.path-to-context)
     workspaces:

@@ -27,5 +27,5 @@ spec:
       args:
         - set -e -o pipefail;
           ibmcloud login -a $(params.api-url) -r $(params.ibm-cloud-region);
-          ibmcloud target --cf;
+          ibmcloud target -g Default;
           ibmcloud fn deploy -m $(params.path-to-manifest-file);

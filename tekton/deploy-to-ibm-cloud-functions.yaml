@@ -26,6 +26,6 @@ spec:
       command: ["/bin/bash", "-c"]
       args:
         - set -e -o pipefail;
-          ibmcloud login -a $(params.api-url) -r $(params.ibm-cloud-region) 
+          ibmcloud login -a $(params.api-url) -r $(params.ibm-cloud-region);
           ibmcloud target -o BillyDeveloperAdvocado@gmail.com  -s dev;
           ibmcloud fn deploy -m $(params.path-to-manifest-file);

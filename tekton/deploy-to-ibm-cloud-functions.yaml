@@ -28,4 +28,4 @@ spec:
         - set -e -o pipefail;
           ibmcloud login -a $(params.api-url) -r $(params.ibm-cloud-region);
           ibmcloud target --cf;
-          ibmcloud fn deploy -m $(params.path-to-manifest-file);
+          ibmcloud fn deploy -m $(workspaces.source.path)/$(params.path-to-manifest-file);

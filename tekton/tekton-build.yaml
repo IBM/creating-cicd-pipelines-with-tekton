@@ -40,19 +40,6 @@ spec:
         value: $(params.git-repo-url)
       workspaces:
         - name: git-repo
-          persistentVolumeClaim:
-            claimName: $(uid)-pvc
-  - apiVersion: v1
-    kind: PersistentVolumeClaim
-    metadata:
-      name: $(uid)-pvc
-    spec:
-      resources:
-        requests:
-          storage: 5Gi
-      volumeMode: Filesystem
-      accessModes:
-        - ReadWriteOnce
 ---
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline

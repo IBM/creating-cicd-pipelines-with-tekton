@@ -5,7 +5,8 @@ packages:
     version: 1.0
     license: Apache-2.0
     actions:
-      helloJava:
-        function: target/hello-tekton.jar
+      helloTekton:
+        function: target/hellotekton.jar
         runtime: java
         main: com.ibm.developer.FunctionApp
+        web-export: true

@@ -2,3 +2,7 @@ apiVersion: triggers.tekton.dev/v1alpha1
 kind: TriggerBinding
 metadata:
   name: manual-trigger-binding
+spec:
+  params:
+  - name: git-access-token
+    value: public

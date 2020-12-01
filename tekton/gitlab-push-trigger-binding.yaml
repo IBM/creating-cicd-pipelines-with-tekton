@@ -1,0 +1,10 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerBinding
+metadata:
+  name: gitlab-push-trigger-binding
+spec:
+  params:
+  - name: git-repo-url
+    value: $(event.repository.git_http_url)
+  - name: commit-id
+    value: $(event.checkout_sha)

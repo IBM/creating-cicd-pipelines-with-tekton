@@ -10,3 +10,10 @@ packages:
         runtime: java
         main: com.ibm.developer.FunctionApp
         web-export: true
+    apis:
+      helloTektonAPI: #Endpoint ID
+        api: #API Basepath
+          helloTekton: #Endpoint Path
+            helloTekton: #Function Reference
+              method: GET
+              response: json 

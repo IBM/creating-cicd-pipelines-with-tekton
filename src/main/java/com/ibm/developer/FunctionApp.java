@@ -15,7 +15,7 @@ public class FunctionApp {
 		} else {
 			result = "Hello " + nameArg.getAsString();
 		}
-		response.addProperty("body", "<html><body><h3>" + result + "</h3></body></html>");
+		response.addProperty("body", result);
 
 		return response;
 	}

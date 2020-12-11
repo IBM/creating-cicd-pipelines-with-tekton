@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: deploy-artifact-to-ibm-cloud-functions
+  name: verify-deployment
 spec:
   params:
     - name: ibm-cloud-region
@@ -9,8 +9,6 @@ spec:
     - name: api-url
       description: API URL for interacting with IBM Cloud
       default: cloud.ibm.com
-    - name: message-to-match-to
-      description: Function response should match this message
   workspaces:
     - name: source
   steps:
@@ -36,6 +34,4 @@ spec:
         
         
         Verification string? ->"I'm a cloud native developer now!"
-        
-        Alternatively attendees supply message? message-to-match-to
-        */
+         */

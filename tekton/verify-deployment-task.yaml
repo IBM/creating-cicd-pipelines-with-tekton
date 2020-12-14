@@ -23,15 +23,15 @@ spec:
       command: ["/bin/bash", "-c"]
       args:
         - set -e -o pipefail;
-        ibmcloud login -a $(params.api-url) -r $(params.ibm-cloud-region);
-        ibmcloud target --cf;
-        ibmcloud fn action get helloTekton; <- get result back as variable?
-        
-        /*
-        
-        
-        Comparison code here
-        
-        
-        Verification string? ->"I'm a cloud native developer now!"
-         */
+          ibmcloud login -a $(params.api-url) -r $(params.ibm-cloud-region);
+          ibmcloud target --cf;
+ #        ibmcloud fn action get helloTekton; <- get result back as variable?
+ #       
+ #       /*
+ #       
+ #       
+ #       Comparison code here
+ #       
+ #       
+ #       Verification string? ->"I'm a cloud native developer now!"
+ #        */

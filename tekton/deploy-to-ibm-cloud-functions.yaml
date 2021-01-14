@@ -32,6 +32,5 @@ spec:
           ibmcloud plugin update cloud-functions;
           ibmcloud plugin list;
           ibmcloud target --cf;
-          ibmcloud fn action list;
           ibmcloud fn deploy -m $(workspaces.source.path)/$(params.path-to-manifest-file);
           ibmcloud fn action get -r helloTekton;

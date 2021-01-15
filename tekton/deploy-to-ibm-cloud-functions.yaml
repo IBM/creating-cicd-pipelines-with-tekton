@@ -26,7 +26,11 @@ spec:
       command: ["/bin/bash", "-c"]
       args:
         - set -e -o pipefail;
-          ibmcloud login -a $(params.api-url) -r $(params.ibm-cloud-region);
+          ibmcloud login -a $(params.api-url) -r $(params.ibm-cloud-region) -g default;
+          ibmcloud version;
+          ibmcloud plugin list;
+          ibmcloud plugin update cloud-functions;
+          ibmcloud plugin list;
           ibmcloud target --cf;
           ibmcloud fn deploy -m $(workspaces.source.path)/$(params.path-to-manifest-file);
           ibmcloud fn action get -r helloTekton;

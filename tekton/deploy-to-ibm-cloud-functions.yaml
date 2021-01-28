@@ -26,7 +26,7 @@ spec:
       command: ["/bin/bash", "-c"]
       args:
         - set -e -o pipefail;
-          ibmcloud login -a $(params.api-url) -r $(params.ibm-cloud-region) -g Default;
+          ibmcloud login -a $(params.api-url) -r $(params.ibm-cloud-region);
           ibmcloud version;
           ibmcloud plugin list;
           ibmcloud plugin update cloud-functions;

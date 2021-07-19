@@ -31,6 +31,6 @@ spec:
           ibmcloud plugin list;
           ibmcloud plugin update cloud-functions;
           ibmcloud plugin list;
-          ibmcloud target --cf;
+          ibmcloud target -o algoetz@mailbox.org -s dev_space;
           ibmcloud fn deploy -m $(workspaces.source.path)/$(params.path-to-manifest-file);
           ibmcloud fn action get -r helloTekton;

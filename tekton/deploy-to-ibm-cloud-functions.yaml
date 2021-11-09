@@ -16,7 +16,7 @@ spec:
     - name: source
   steps:
     - name: deploy-app
-      image: ibmcom/pipeline-base-image:2.7
+      image: icr.io/continuous-delivery/pipeline/pipeline-base-image:2.15
       env:
         - name: IBMCLOUD_API_KEY
           valueFrom:
@@ -31,6 +31,6 @@ spec:
           ibmcloud plugin list;
           ibmcloud plugin update cloud-functions;
           ibmcloud plugin list;
-          ibmcloud target --cf;
+          ibmcloud target --cf -s dev;
           ibmcloud fn deploy -m $(workspaces.source.path)/$(params.path-to-manifest-file);
           ibmcloud fn action get -r helloTekton;

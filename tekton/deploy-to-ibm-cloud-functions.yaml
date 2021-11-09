@@ -16,7 +16,7 @@ spec:
     - name: source
   steps:
     - name: deploy-app
-      image: ibmcom/pipeline-base-image:2.7
+      image: icr.io/continuous-delivery/pipeline/pipeline-base-image:2.15
       env:
         - name: IBMCLOUD_API_KEY
           valueFrom:

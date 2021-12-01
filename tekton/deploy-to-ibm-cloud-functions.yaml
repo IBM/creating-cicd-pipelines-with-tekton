@@ -29,7 +29,6 @@ spec:
           ibmcloud login -a $(params.api-url) -r $(params.ibm-cloud-region);
           ibmcloud version;
           ibmcloud plugin list;
-          ibmcloud plugin update cloud-functions;
           ibmcloud plugin list;
           ibmcloud target --cf -s dev;
           ibmcloud fn deploy -m $(workspaces.source.path)/$(params.path-to-manifest-file);

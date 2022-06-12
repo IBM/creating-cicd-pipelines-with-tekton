@@ -5,7 +5,7 @@ metadata:
 spec:
   params:
     - name: path-to-manifest-file
-      description: The path to the yaml file to deploy within the git source
+      description: The path to the yaml file to deploy within the git source, test commit.
       default: manifest.yaml
     - name: ibm-cloud-region
       description: Region where cluster is located
